@@ -55,7 +55,7 @@ if (process.platform == 'darwin') {
   if (mariadbVersion == '10.3') {
     run(`${bin}/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO ''@'localhost'"`);
     run(`${bin}/mysql -u root -e "FLUSH PRIVILEGES"`);
-  }else{
+  }else if (mariadbUser !== undefined and mariadbPassword !== undefined){
     run(`${bin}/mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
     run(`${bin}/mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
     run(`${bin}/mysql -u root -e "FLUSH PRIVILEGES"`);
@@ -85,9 +85,11 @@ if (process.platform == 'darwin') {
   run(`"${bin}\\mysql" -u root -e "FLUSH PRIVILEGES"`);
   
   // add base user
-  run(`"${bin}\\mysql" -u root -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
-  run(`"${bin}\\mysql" -u root -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
-  run(`"${bin}\\mysql" -u root -e "FLUSH PRIVILEGES"`);
+  if (mariadbUser !== undefined and mariadbPassword !== undefined){
+    run(`"${bin}\\mysql" -u root -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
+    run(`"${bin}\\mysql" -u root -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
+    run(`"${bin}\\mysql" -u root -e "FLUSH PRIVILEGES"`);
+  }
   
 } else {
   const image = process.env['ImageOS'];
@@ -116,9 +118,11 @@ if (process.platform == 'darwin') {
 
 
   // add defined user
-  run(`sudo mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
-  run(`sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
-  run(`sudo mysql -e "FLUSH PRIVILEGES"`);
+  if (mariadbUser !== undefined and mariadbPassword !== undefined){
+    run(`sudo mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
+    run(`sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
+    run(`sudo mysql -e "FLUSH PRIVILEGES"`);
+  }
   
   bin = `/usr/bin`;
 }
