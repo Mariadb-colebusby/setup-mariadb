@@ -5,6 +5,8 @@ const path = require('path');
 const process = require('process');
 const spawnSync = require('child_process').spawnSync;
 
+// test
+
 function run(command) {
   console.log(command);
   let env = Object.assign({}, process.env);
