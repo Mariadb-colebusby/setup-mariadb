@@ -34,6 +34,8 @@ if (!['10.8', '10.7', '10.6', '10.5', '10.4', '10.3'].includes(mariadbVersion)) 
 }
 
 const database = process.env['INPUT_DATABASE'];
+const mariadbUser = process.env['INPUT_MARIADB-USER'];
+const mariadbPassword = process.env['INPUT_MARIADB-PASSWORD'];
 
 let bin;
 
@@ -50,6 +52,10 @@ if (process.platform == 'darwin') {
   // add permissions
   if (mariadbVersion == '10.3') {
     run(`${bin}/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO ''@'localhost'"`);
+    run(`${bin}/mysql -u root -e "FLUSH PRIVILEGES"`);
+  }else{
+    run(`${bin}/mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
+    run(`${bin}/mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
     run(`${bin}/mysql -u root -e "FLUSH PRIVILEGES"`);
   }
 } else if (process.platform == 'win32') {
@@ -75,6 +81,12 @@ if (process.platform == 'darwin') {
   run(`"${bin}\\mysql" -u root -e "CREATE USER 'runneradmin'@'localhost' IDENTIFIED BY ''"`);
   run(`"${bin}\\mysql" -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'runneradmin'@'localhost'"`);
   run(`"${bin}\\mysql" -u root -e "FLUSH PRIVILEGES"`);
+  
+  // add base user
+  run(`"${bin}\\mysql" -u root -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
+  run(`"${bin}\\mysql" -u root -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
+  run(`"${bin}\\mysql" -u root -e "FLUSH PRIVILEGES"`);
+  
 } else {
   const image = process.env['ImageOS'];
   if (image == 'ubuntu20' || image == 'ubuntu22') {
@@ -101,6 +113,11 @@ if (process.platform == 'darwin') {
   run(`sudo mysql -e "FLUSH PRIVILEGES"`);
 
 
+  // add defined user
+  run(`sudo mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
+  run(`sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
+  run(`sudo mysql -e "FLUSH PRIVILEGES"`);
+  
   bin = `/usr/bin`;
 }
 
