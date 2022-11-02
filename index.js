@@ -56,9 +56,9 @@ if (process.platform == 'darwin') {
     run(`${bin}/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO ''@'localhost'"`);
     run(`${bin}/mysql -u root -e "FLUSH PRIVILEGES"`);
   }else if (mariadbUser !== undefined && mariadbPassword !== undefined){
-    run(`${bin}/mysql -u root -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
-    run(`${bin}/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
-    run(`${bin}/mysql -u root -e "FLUSH PRIVILEGES"`);
+    run(`${bin}/mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
+    run(`${bin}/mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
+    run(`${bin}/mysql -e "FLUSH PRIVILEGES"`);
   }
 } else if (process.platform == 'win32') {
   // install
