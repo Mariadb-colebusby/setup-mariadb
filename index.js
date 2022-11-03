@@ -106,6 +106,7 @@ if (process.platform == 'darwin') {
   run(`sudo apt-get install mariadb-server-${mariadbVersion}`);
 
   // start
+  run(`sudo systemctl unmask mariadb`);
   run(`sudo systemctl enable mariadb`);
   run(`sudo systemctl start mariadb`);
 
