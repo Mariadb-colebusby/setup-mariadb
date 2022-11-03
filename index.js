@@ -65,7 +65,7 @@ if (process.platform == 'darwin') {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'mariadb-'));
   process.chdir(tmpDir);
   const versionMap = {
-    '10.8': '10.8.3',
+    '10.8': '10.8.5',
     '10.7': '10.7.4',
     '10.6': '10.6.8',
     '10.5': '10.5.16',
