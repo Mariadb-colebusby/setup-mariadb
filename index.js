@@ -96,7 +96,7 @@ if (process.platform == 'darwin') {
   if (image == 'ubuntu20' || image == 'ubuntu22') {
     // clear previous data
     run(`sudo systemctl stop mysql.service`);
-    run(`sudo rm -rf /var/lib/mysql`);
+    run(`sudo rm -rf /var/lib/mysql/*`);
   }
 
   // install
