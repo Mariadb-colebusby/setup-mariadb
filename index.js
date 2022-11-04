@@ -56,8 +56,8 @@ if (process.platform == 'darwin') {
     run(`${bin}/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO ''@'localhost'"`);
     run(`${bin}/mysql -u root -e "FLUSH PRIVILEGES"`);
   }else if (mariadbUser !== undefined && mariadbPassword !== undefined){
-    run(`${bin}/mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
-    run(`${bin}/mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
+    run(`${bin}/mysql -e "CREATE USER '`+mariadbUser+`'@'%' IDENTIFIED BY '`+mariadbPassword+`'"`);
+    run(`${bin}/mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'%'"`);
     run(`${bin}/mysql -e "FLUSH PRIVILEGES"`);
   }
 } else if (process.platform == 'win32') {
@@ -121,8 +121,8 @@ if (process.platform == 'darwin') {
 
   // add defined user
   if (mariadbUser !== undefined && mariadbPassword !== undefined){
-    run(`sudo mysql -e "CREATE USER '`+mariadbUser+`'@'localhost' IDENTIFIED BY '`+mariadbPassword+`'"`);
-    run(`sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'localhost'"`);
+    run(`sudo mysql -e "CREATE USER '`+mariadbUser+`'@'%' IDENTIFIED BY '`+mariadbPassword+`'"`);
+    run(`sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '`+mariadbUser+`'@'%'"`);
     run(`sudo mysql -e "FLUSH PRIVILEGES"`);
   }
   
